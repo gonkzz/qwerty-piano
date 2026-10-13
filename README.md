@@ -7,7 +7,7 @@ The keys are laid out like a chromatic button accordion instead of a piano.
 
 ## Goals
 
-- Play notes from G2 to Gb4 using the computer keyboard (US QWERTY layout)
+- Play notes from G3 to Gb5 using the computer keyboard (US QWERTY layout)
 - Notes sustain while a key is held and stop on release
 - Several sounds to switch between (sine, triangle, square, saw, an accordion tone)
 - Raylib as the only dependency
@@ -16,13 +16,13 @@ The keys are laid out like a chromatic button accordion instead of a piano.
 
 ```
  Q row:   Q    W    E    R    T    Y    U    I
-          A2   C3   Eb3  Gb3  A3   C4   Eb4  Gb4
+          A3   C4   Eb4  Gb4  A4   C5   Eb5  Gb5
 
  A row:    A    S    D    F    G    H    J    K
-           Ab2  B2   D3   F3   Ab3  B3   D4   F4
+           Ab3  B3   D4   F4   Ab4  B4   D5   F5
 
  Z row:      Z    X    C    V    B    N    M    ,
-             G2   Bb2  Db3  E3   G3   Bb3  Db4  E4
+             G3   Bb3  Db4  E4   G4   Bb4  Db5  E5
 ```
 
 - Each slanted column of three keys is three consecutive semitones going up,
