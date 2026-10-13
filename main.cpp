@@ -57,7 +57,7 @@ int main() {
 
     while (!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(GetColor(0x200123BC));
+        ClearBackground(GetColor(0x233223FF));
 
 //        DrawCircle(100, 200, 30, RAYWHITE);
 
