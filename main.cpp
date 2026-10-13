@@ -42,6 +42,11 @@ constexpr std::array<std::array<Note, 8>, 3> notes{{
 
 }};
 
+constexpr float SPACING = 85.0f;    // distance between keys
+constexpr float RADIUS = 30.0f;
+constexpr float LEFT = 60.0f;
+constexpr float TOP = 200.0f;
+
 
 int main() {
     // C++ 23 yay
@@ -54,7 +59,12 @@ int main() {
         BeginDrawing();
         ClearBackground(GetColor(0x2323CC));
 
-        
+//        DrawCircle(100, 200, 30, RAYWHITE);
+
+        for (std::size_t col = 0; col < notes[0].size(); ++col) {
+            float x_pos = LEFT + col * SPACING;
+            DrawCircle(x_pos, TOP, RADIUS, RAYWHITE);
+        }
 
         EndDrawing();
     }
