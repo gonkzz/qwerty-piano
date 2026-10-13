@@ -8,7 +8,9 @@ It's a small synthesizer in C++ with [raylib](https://www.raylib.com/), played e
 
 I wrote about it here: [I'm Learning a New Instrument](https://goncalo-soares.com/blog/qwerty-synth/).
 
-![The synth window: three rows of circles with note names, three of them black because their keys are held](assets/screenshot.png)
+
+https://github.com/user-attachments/assets/460366cc-7a6f-4039-9f1d-26ce1cbc6545
+
 
 ## Layout
 
