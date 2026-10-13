@@ -29,12 +29,13 @@ F#3 is on both `K` and `1`, so it is reachable from either half.
 
 ## Building
 
-Requires a C++ compiler and raylib.
+Requires a C++23 compiler, make and raylib.
 
 ```sh
 # Arch Linux
 sudo pacman -S raylib
 
-g++ main.cpp -o keyboard -lraylib
-./keyboard
+make        # build
+make run    # build and run
+make clean  # remove the binary
 ```
