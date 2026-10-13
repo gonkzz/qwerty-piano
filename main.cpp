@@ -47,6 +47,7 @@ constexpr float RADIUS = 30.0f;
 constexpr float LEFT = 60.0f;
 constexpr float TOP = 200.0f;
 
+constexpr std::array<float, 3> ROW_SHIFT{0.0f, 0.25f, 0.75f};  // Q, A, Z
 
 int main() {
     // C++ 23 yay
@@ -59,11 +60,17 @@ int main() {
         BeginDrawing();
         ClearBackground(GetColor(0x233223FF));
 
-//        DrawCircle(100, 200, 30, RAYWHITE);
+        for (int row = 0; row < 3; ++row) {
+            for (std::size_t col = 0; col < notes[0].size(); ++col) {
+                float x_pos = LEFT + (col + ROW_SHIFT[row]) * SPACING;
+                float y_pos = TOP + row * SPACING;
 
-        for (std::size_t col = 0; col < notes[0].size(); ++col) {
-            float x_pos = LEFT + col * SPACING;
-            DrawCircle(x_pos, TOP, RADIUS, RAYWHITE);
+                const Note& n = notes[row][col];
+                Color fill = IsKeyDown(n.key) ? ORANGE : RAYWHITE;
+
+                DrawCircle(x_pos, y_pos, RADIUS, fill);
+
+            }
         }
 
         EndDrawing();
