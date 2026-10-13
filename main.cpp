@@ -66,10 +66,9 @@ int main() {
                 float y_pos = TOP + row * SPACING;
 
                 const Note& n = notes[row][col];
-                Color fill = IsKeyDown(n.key) ? ORANGE : RAYWHITE;
+                Color fill = IsKeyDown(n.key) ? BLACK : RAYWHITE;
 
                 DrawCircle(x_pos, y_pos, RADIUS, fill);
-
             }
         }
 
