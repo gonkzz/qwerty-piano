@@ -1,31 +1,34 @@
-# keyboard
+# qwerty-piano
 
-A small piano you play with your laptop keyboard, written in C++ with [raylib](https://www.raylib.com/).
+A small instrument you play with your laptop keyboard, written in C++ with [raylib](https://www.raylib.com/).
+The keys are laid out like a chromatic button accordion instead of a piano.
 
 ## Goals
 
-- Piano range from G2 to F4 using the computer keyboard (US QWERTY layout)
+- Play notes from G2 to Gb4 using the computer keyboard (US QWERTY layout)
 - Notes sustain while a key is held and stop on release
-- Several sounds to switch between (sine, triangle, square, saw, a piano tone)
+- Several sounds to switch between (sine, triangle, square, saw, an accordion tone)
 - Raylib as the only dependency
 
 ## Keybinds
 
 ```
-upper half (G3–F4)
- black:   1    2   3       5   6
-         F#3  G#3 A#3     C#4 D#4
- white:     Q    W   E   R   T   Y   U
-            G3   A3  B3  C4  D4  E4  F4
+ Q row:   Q    W    E    R    T    Y    U    I
+          A2   C3   Eb3  Gb3  A3   C4   Eb4  Gb4
 
-lower half (G2–F3)
- black:        S   D       G   H       K
-              G#2 A#2     C#3 D#3     F#3
- white:     Z    X   C   V   B   N   M
-            G2   A2  B2  C3  D3  E3  F3
+ A row:    A    S    D    F    G    H    J    K
+           Ab2  B2   D3   F3   Ab3  B3   D4   F4
+
+ Z row:      Z    X    C    V    B    N    M    ,
+             G2   Bb2  Db3  E3   G3   Bb3  Db4  E4
 ```
 
-F#3 is on both `K` and `1`, so it is reachable from either half.
+- Each slanted column of three keys is three consecutive semitones going up,
+  so the chromatic scale runs `Z A Q`, `X S W`, `C D E`, and so on.
+- Moving one key to the right on a row goes up a minor third.
+- The same note an octave higher is four keys to the right on the same row.
+- A chord or scale keeps the same shape wherever it starts: G major is `Z S D`,
+  and the same shape one key to the right is Bb major.
 
 ## Building
 
