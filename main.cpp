@@ -15,6 +15,7 @@ struct Note {
 struct Voice {
     float freq = 0.0f;
     float phase = 0.0f;
+    float level = 0.0f;
     std::atomic<bool> on = false;   // written by main and read by audio thread
 };
 
@@ -64,14 +65,20 @@ std::string note_name(int midi) {
 
 std::array<Voice, 24> voices;
 
-constexpr float SPACING = 85.0f;    // distance between keys
-constexpr float RADIUS = 30.0f;
+constexpr float SPACING = 100.0f;    // distance between keys
+constexpr float RADIUS = 50.0f;
 constexpr float LEFT = 60.0f;
 constexpr float TOP = 200.0f;
 
 constexpr std::array<float, 3> ROW_SHIFT{0.0f, 0.25f, 0.75f};  // Q, A, Z
 
 constexpr int SAMPLE_RATE = 44100;
+
+constexpr float ATTACK_SECONDS = 0.03f;
+constexpr float RELEASE_SECONDS = 0.15f;
+
+constexpr float ATTACK_STEP = 1.0f / (ATTACK_SECONDS * SAMPLE_RATE);
+constexpr float RELEASE_STEP = 1.0f / (ATTACK_SECONDS * SAMPLE_RATE);
 
 void audio_callback(void* buffer, unsigned int frames) {
     float* out = static_cast<float*>(buffer);
@@ -80,9 +87,15 @@ void audio_callback(void* buffer, unsigned int frames) {
         float sample = 0.0f;
 
         for (Voice& voice: voices) {
-            if (!voice.on) continue;
+            if (voice.on) {
+                voice.level = std::min(voice.level + ATTACK_STEP, 1.0f);
+            } else {
+                voice.level = std::max(voice.level - RELEASE_STEP, 0.0f);
+            }
 
-            sample = std::sin(2.0f * PI * voice.phase) * 0.2f;
+            if (voice.level == 0.0f) continue;
+
+            sample += std::sin(2.0f * PI * voice.phase) * voice.level * 0.5f;
             voice.phase += voice.freq / SAMPLE_RATE;
 
             if (voice.phase >= 1.0f) voice.phase -= 1.0f;
@@ -101,7 +114,7 @@ int main() {
     // C++ 23 yay
     std::print("Hello, World\n");
 
-    InitWindow(800, 600, "QWERTY Piano");
+    InitWindow(1280, 720, "QWERTY Piano");
     SetTargetFPS(60);
 
     InitAudioDevice();
