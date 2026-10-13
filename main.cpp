@@ -2,12 +2,19 @@
 #include <array>
 #include <format>
 #include <string>
+#include <atomic>
+#include <cmath>
 
 #include <raylib.h>
 
 struct Note {
     int midi;           // scientific pitch notation
     KeyboardKey key;
+};
+
+struct Voice {
+    float freq = 0.0f;
+    float phase = 0.0f;
 };
 
 // accordeon mapping to QWERTY
@@ -44,13 +51,6 @@ constexpr std::array<std::array<Note, 8>, 3> notes{{
 
 }};
 
-constexpr float SPACING = 85.0f;    // distance between keys
-constexpr float RADIUS = 30.0f;
-constexpr float LEFT = 60.0f;
-constexpr float TOP = 200.0f;
-
-constexpr std::array<float, 3> ROW_SHIFT{0.0f, 0.25f, 0.75f};  // Q, A, Z
-
 constexpr std::array<const char*, 12>NOTE_NAMES {
     "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"
 };
@@ -61,12 +61,41 @@ std::string note_name(int midi) {
     return std::format("{}{}", NOTE_NAMES[midi % 12], midi / 12 - 1);
 }
 
+std::array<Voice, 24> voices;
+
+constexpr float SPACING = 85.0f;    // distance between keys
+constexpr float RADIUS = 30.0f;
+constexpr float LEFT = 60.0f;
+constexpr float TOP = 200.0f;
+
+constexpr std::array<float, 3> ROW_SHIFT{0.0f, 0.25f, 0.75f};  // Q, A, Z
+
+constexpr int SAMPLE_RATE = 44100;
+
+void audio_callback(void* buffer, unsigned int frames) {
+    static float phase = 0.0f;
+    float* out = static_cast<float*>(buffer);
+
+    for (unsigned int i = 0; i < frames; ++i) {
+        out[i] = std::sin(2.0f * PI * phase) * 0.2f;
+        phase += 220.0f / SAMPLE_RATE;
+        if (phase >= 1.0f) phase -= 1.0f;
+    }
+}
+
+
 int main() {
     // C++ 23 yay
     std::print("Hello, World\n");
 
     InitWindow(800, 600, "QWERTY Piano");
     SetTargetFPS(60);
+
+    InitAudioDevice();
+    SetAudioStreamBufferSizeDefault(512);
+    AudioStream stream = LoadAudioStream(SAMPLE_RATE, 32, 1);
+    SetAudioStreamCallback(stream, audio_callback);
+    PlayAudioStream(stream);
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -85,13 +114,15 @@ int main() {
                 std::string name = note_name(n.midi);
                 int size = 25;
                 int w = MeasureText(name.c_str(), size);
-                DrawText(name.c_str(), x_pos - w / 2, y_pos - size / 2, size, RAYWHITE);
+                DrawText(name.c_str(), x_pos - w / 2, y_pos - size / 2, size, GRAY);
             }
         }
 
         EndDrawing();
     }
 
+    UnloadAudioStream(stream);
+    CloseAudioDevice();
     CloseWindow();
 
     return 0;
