@@ -65,10 +65,10 @@ std::string note_name(int midi) {
 
 std::array<Voice, 24> voices;
 
-constexpr float SPACING = 100.0f;    // distance between keys
+constexpr float SPACING = 120.0f;    // distance between keys
 constexpr float RADIUS = 50.0f;
-constexpr float LEFT = 60.0f;
-constexpr float TOP = 200.0f;
+constexpr float LEFT = 180.0f;
+constexpr float TOP = 250.0f;
 
 constexpr std::array<float, 3> ROW_SHIFT{0.0f, 0.25f, 0.75f};  // Q, A, Z
 
@@ -95,7 +95,7 @@ void audio_callback(void* buffer, unsigned int frames) {
 
             if (voice.level == 0.0f) continue;
 
-            sample += std::sin(2.0f * PI * voice.phase) * voice.level * 0.5f;
+            sample += std::sin(2.0f * PI * voice.phase) * voice.level * 0.3f;
             voice.phase += voice.freq / SAMPLE_RATE;
 
             if (voice.phase >= 1.0f) voice.phase -= 1.0f;
