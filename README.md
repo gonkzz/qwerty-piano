@@ -1,4 +1,6 @@
-# qwerty-piano
+# qwerty-synth
+
+<img src="assets/icon.png" alt="" width="140">
 
 A small instrument you play with your laptop keyboard, written in C++ with [raylib](https://www.raylib.com/).
 The keys are laid out like a chromatic button accordion instead of a piano.
