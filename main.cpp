@@ -78,7 +78,7 @@ constexpr float ATTACK_SECONDS = 0.03f;
 constexpr float RELEASE_SECONDS = 0.15f;
 
 constexpr float ATTACK_STEP = 1.0f / (ATTACK_SECONDS * SAMPLE_RATE);
-constexpr float RELEASE_STEP = 1.0f / (ATTACK_SECONDS * SAMPLE_RATE);
+constexpr float RELEASE_STEP = 1.0f / (RELEASE_SECONDS * SAMPLE_RATE);
 
 void audio_callback(void* buffer, unsigned int frames) {
     float* out = static_cast<float*>(buffer);
