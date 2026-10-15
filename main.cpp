@@ -22,24 +22,24 @@ struct Voice {
 // accordeon mapping to QWERTY
 constexpr std::array<std::array<Note, 8>, 3> notes{{
     // Q row
-    {Note{57, KEY_Q},   // A3
-     Note{60, KEY_W},   // C4
-     Note{63, KEY_E},   // Eb4
-     Note{66, KEY_R},   // Gb4
-     Note{69, KEY_T},   // A4
-     Note{72, KEY_Y},   // C5
-     Note{75, KEY_U},   // Eb5
-     Note{78, KEY_I}},  // Gb5
+    {Note{57, KEY_E},   // A3
+     Note{60, KEY_R},   // C4
+     Note{63, KEY_T},   // Eb4
+     Note{66, KEY_Y},   // Gb4
+     Note{69, KEY_U},   // A4
+     Note{72, KEY_I},   // C5
+     Note{75, KEY_O},   // Eb5
+     Note{78, KEY_P}},  // Gb5
 
     // A row
-    {Note{56, KEY_A},   // Ab3
-     Note{59, KEY_S},   // B3
-     Note{62, KEY_D},   // D4
-     Note{65, KEY_F},   // F4
-     Note{68, KEY_G},   // Ab4
-     Note{71, KEY_H},   // B4
-     Note{74, KEY_J},   // D5
-     Note{77, KEY_K}},  // F5
+    {Note{56, KEY_S},   // Ab3
+     Note{59, KEY_D},   // B3
+     Note{62, KEY_F},   // D4
+     Note{65, KEY_G},   // F4
+     Note{68, KEY_H},   // Ab4
+     Note{71, KEY_J},   // B4
+     Note{74, KEY_K},   // D5
+     Note{77, KEY_L}},  // F5
 
     // Z row
     {Note{55, KEY_Z},       // G3
@@ -67,10 +67,10 @@ std::array<Voice, 24> voices;
 
 constexpr float SPACING = 120.0f;    // distance between keys
 constexpr float RADIUS = 50.0f;
-constexpr float LEFT = 180.0f;
+constexpr float LEFT = 55.0f;
 constexpr float TOP = 250.0f;
 
-constexpr std::array<float, 3> ROW_SHIFT{0.0f, 0.25f, 0.75f};  // Q, A, Z
+constexpr std::array<float, 3> ROW_SHIFT{2.0f, 1.25f, 0.75f};  // rows start at E, S, Z
 
 constexpr int SAMPLE_RATE = 44100;
 
