@@ -4,6 +4,7 @@
 #include <string>
 #include <atomic>
 #include <cmath>
+#include <algorithm>
 
 #include <raylib.h>
 

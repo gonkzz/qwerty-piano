@@ -32,7 +32,11 @@ Some three-key chords won't sound on a laptop keyboard. That's ghosting, and it 
 
 ## Building
 
-Requires a C++23 compiler, make and raylib. US QWERTY layout.
+Requires a C++23 compiler with `std::print` support (GCC 14+ or a recent clang), make and raylib. US QWERTY layout.
+
+### Linux
+
+Install raylib from your package manager, or [build it from source](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux) if your distro doesn't package it.
 
 ```sh
 # Arch Linux
@@ -40,6 +44,34 @@ sudo pacman -S raylib
 
 make run
 ```
+
+### macOS
+
+Install the Xcode Command Line Tools and [Homebrew](https://brew.sh), then:
+
+```sh
+xcode-select --install
+brew install raylib
+
+make CXX=clang++ \
+     CXXFLAGS="-std=c++23 -O2 -I$(brew --prefix)/include" \
+     LDLIBS="-L$(brew --prefix)/lib -lraylib" \
+     run
+```
+
+The extra variables point the compiler at Homebrew's raylib. If clang reports that `<print>` is missing, update Xcode.
+
+### Windows
+
+Install [MSYS2](https://www.msys2.org), open the **MSYS2 UCRT64** shell, then:
+
+```sh
+pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-raylib make
+
+make LDLIBS="-lraylib -lopengl32 -lgdi32 -lwinmm" run
+```
+
+Run it from the UCRT64 shell, which has raylib's DLL on its path. If the linker complains about `__open_terminal` or `__write_to_terminal`, add `-lstdc++exp` to `LDLIBS`.
 
 ## What's next
 
