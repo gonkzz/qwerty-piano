@@ -2,9 +2,8 @@
 
 <img src="assets/icon.png" alt="" width="140">
 
-I used to carry my saxophone everywhere. These days my laptop is always in my backpack, so I'm turning it into an instrument.
 
-It's a small synthesizer in C++ with [raylib](https://www.raylib.com/), played entirely on the laptop keyboard. The keys follow a chromatic button accordion layout instead of a piano.
+A small synthesizer in C++ with [raylib](https://www.raylib.com/), played entirely on the laptop keyboard. The keys follow a chromatic button accordion layout instead of a piano.
 
 I wrote about it here: [I'm Learning a New Instrument](https://goncalo-soares.com/blog/qwerty-synth/).
 

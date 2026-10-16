@@ -20,37 +20,44 @@ struct Voice {
 };
 
 // accordeon mapping to QWERTY
-constexpr std::array<std::array<Note, 8>, 3> notes{{
+constexpr std::size_t COLS = 10;
+
+constexpr std::array<std::array<Note, COLS>, 3> notes{{
     // Q row
-    {Note{57, KEY_E},   // A3
-     Note{60, KEY_R},   // C4
-     Note{63, KEY_T},   // Eb4
-     Note{66, KEY_Y},   // Gb4
-     Note{69, KEY_U},   // A4
-     Note{72, KEY_I},   // C5
-     Note{75, KEY_O},   // Eb5
-     Note{78, KEY_P}},  // Gb5
+    {Note{54, KEY_W},               // Gb3
+     Note{57, KEY_E},               // A3
+     Note{60, KEY_R},               // C4
+     Note{63, KEY_T},               // Eb4
+     Note{66, KEY_Y},               // Gb4
+     Note{69, KEY_U},               // A4
+     Note{72, KEY_I},               // C5
+     Note{75, KEY_O},               // Eb5
+     Note{78, KEY_P},               // Gb5
+     Note{81, KEY_LEFT_BRACKET}},   // A5
 
     // A row
-    {Note{56, KEY_S},   // Ab3
-     Note{59, KEY_D},   // B3
-     Note{62, KEY_F},   // D4
-     Note{65, KEY_G},   // F4
-     Note{68, KEY_H},   // Ab4
-     Note{71, KEY_J},   // B4
-     Note{74, KEY_K},   // D5
-     Note{77, KEY_L}},  // F5
+    {Note{53, KEY_A},               // F3
+     Note{56, KEY_S},               // Ab3
+     Note{59, KEY_D},               // B3
+     Note{62, KEY_F},               // D4
+     Note{65, KEY_G},               // F4
+     Note{68, KEY_H},               // Ab4
+     Note{71, KEY_J},               // B4
+     Note{74, KEY_K},               // D5
+     Note{77, KEY_L},               // F5
+     Note{80, KEY_SEMICOLON}},      // Ab5
 
     // Z row
-    {Note{55, KEY_Z},       // G3
-     Note{58, KEY_X},       // Bb3
-     Note{61, KEY_C},       // Db4
-     Note{64, KEY_V},       // E4
-     Note{67, KEY_B},       // G4
-     Note{70, KEY_N},       // Bb4
-     Note{73, KEY_M},       // Db5
-     Note{76, KEY_COMMA}}   // E5
-
+    {Note{52, KEY_NULL},            // E3, dummy for the < key (raylib has no constant for it)
+     Note{55, KEY_Z},               // G3
+     Note{58, KEY_X},               // Bb3
+     Note{61, KEY_C},               // Db4
+     Note{64, KEY_V},               // E4
+     Note{67, KEY_B},               // G4
+     Note{70, KEY_N},               // Bb4
+     Note{73, KEY_M},               // Db5
+     Note{76, KEY_COMMA},           // E5
+     Note{79, KEY_PERIOD}}          // G5
 }};
 
 constexpr std::array<const char*, 12>NOTE_NAMES {
@@ -58,19 +65,19 @@ constexpr std::array<const char*, 12>NOTE_NAMES {
 };
 
 std::string note_name(int midi) {
-    // % 12 note within octave
-    // / 12 - 1
+    // % 12 note
+    // / 12 - 1 octave
     return std::format("{}{}", NOTE_NAMES[midi % 12], midi / 12 - 1);
 }
 
-std::array<Voice, 24> voices;
+std::array<Voice, 3 * COLS> voices;
 
-constexpr float SPACING = 120.0f;    // distance between keys
-constexpr float RADIUS = 50.0f;
-constexpr float LEFT = 55.0f;
+constexpr float SPACING = 110.0f;    // distance between keys
+constexpr float RADIUS = 45.0f;
+constexpr float LEFT = 104.0f;
 constexpr float TOP = 250.0f;
 
-constexpr std::array<float, 3> ROW_SHIFT{2.0f, 1.25f, 0.75f};  // rows start at E, S, Z
+constexpr std::array<float, 3> ROW_SHIFT{1.0f, 0.25f, -0.25f};  // rows start at W, A, <
 
 constexpr int SAMPLE_RATE = 44100;
 
@@ -125,7 +132,7 @@ int main() {
 
     for (std::size_t row = 0; row < notes.size(); ++row) {
         for (std::size_t col = 0; col < notes[0].size(); ++col) {
-            voices[row * 8 + col].freq = midi_to_freq(notes[row][col].midi);
+            voices[row * COLS + col].freq = midi_to_freq(notes[row][col].midi);
         }
     }
 
@@ -148,7 +155,7 @@ int main() {
                 int w = MeasureText(name.c_str(), size);
                 DrawText(name.c_str(), x_pos - w / 2, y_pos - size / 2, size, GRAY);
 
-                voices[row * 8 + col].on = IsKeyDown(n.key);
+                voices[row * COLS + col].on = IsKeyDown(n.key);
             }
         }
 
